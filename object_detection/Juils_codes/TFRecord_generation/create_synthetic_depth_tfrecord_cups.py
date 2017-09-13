@@ -143,18 +143,21 @@ writer = tf.python_io.TFRecordWriter(FLAGS.output_path)
 
 
 for scene_id in range(1,930):
-    for im_id in range(0,17):
+    base_path = FLAGS.data_dir + '/coffee_{:03d}'.format(scene_id)
+    num_img = len(os.listdir(base_path+'/rgb'))
+    scene_info = inout.load_info(FLAGS.data_dir + '/coffee_{:03d}/info.yml'.format(scene_id))
+    scene_gt = inout.load_gt(FLAGS.data_dir + '/coffee_{:03d}/gt.yml'.format(scene_id))
+
+    for im_id in range(0,len(scene_gt.keys())-1):
         print('scene_id : {:03d}, im_id : {:03d}'.format(scene_id,im_id))
         im_id_str = '{0:04d}'.format(im_id)
-        base_path = FLAGS.data_dir+'/coffee_{:03d}'.format(scene_id)
         img_path = base_path + '/rgb/' + im_id_str + '.png'
         surface_path = base_path + '/normal_map/' + im_id_str + '.png'
         depth_path = base_path + '/depth/' + im_id_str + '.png'
         # visibmask_path = base_path+'/visib'+img_num_str+'.png'
         # invisibmask_path = base_path+'/invisib'+img_num_str+'.png'
-        scene_info = inout.load_info(FLAGS.data_dir+'/coffee_{:03d}/info.yml'.format(scene_id))
-        scene_gt = inout.load_gt(FLAGS.data_dir+'/coffee_{:03d}/gt.yml'.format(scene_id))
-        visible_obj = scene_info[im_id]['visible_obj']
+        # visible_obj = scene_info[im_id]['visible_obj']
+        visible_obj = 1
         tf_example = dict_to_tf_example(depth_path, visible_obj, scene_gt[im_id], label_map_dict)
         writer.write(tf_example.SerializeToString())
 
