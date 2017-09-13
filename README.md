@@ -1,3 +1,8 @@
+# This repository was forked from https://github.com/tensorflow/models/tree/master/object_detection
+
+# for the training and test codes, go to ./object_detection/Juils_codes
+
+
 # TensorFlow Models
 
 This repository contains machine learning models implemented in
