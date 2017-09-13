@@ -8,6 +8,8 @@ import pickle
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import inout
+import sys
+sys.path.append("../..")
 from object_detection.utils import dataset_util
 from object_detection.utils import label_map_util
 import scipy.misc as scimisc
@@ -132,31 +134,26 @@ SETS = ['train', 'val', 'trainval', 'test']
 FLAGS.set = 'train'
 if FLAGS.set not in SETS:
     raise ValueError('set must be in : {}'.format(SETS))
-FLAGS.output_path = 'synthetic_train_cups_depth_300_samples.record'
-FLAGS.data_dir = '/home/juil/workspace/synthetic_scene_generation/output/render'
+DataPath = '/home/juil/workspace/GitHub/TF_detection/Data'
+FLAGS.data_dir = '/home/juil/workspace/training_scene_generator_20170912/sixd_toolkit-master/output/render'
+FLAGS.output_path = DataPath+'/data_for_training/synthetic_train_cups_depth_300_samples.record'
+label_map_dict = label_map_util.get_label_map_dict('../../data/synthetic_label_map_cup.pbtxt')
 
 writer = tf.python_io.TFRecordWriter(FLAGS.output_path)
-label_map_dict = label_map_util.get_label_map_dict('/home/juil/workspace/tensorflow_object_detection/object_detection/data/synthetic_label_map_cup.pbtxt')
 
 
-
-
-for scene_id in range(1,300):
-    for im_id in range(0,72):
+for scene_id in range(1,930):
+    for im_id in range(0,17):
         print('scene_id : {:03d}, im_id : {:03d}'.format(scene_id,im_id))
         im_id_str = '{0:04d}'.format(im_id)
-        base_path = '/home/juil/Downloads/training_scene_generator_20170901/sixd_toolkit-master/output/render/coffee_{:03d}'.format(scene_id)
+        base_path = FLAGS.data_dir+'/coffee_{:03d}'.format(scene_id)
         img_path = base_path + '/rgb/' + im_id_str + '.png'
         surface_path = base_path + '/normal_map/' + im_id_str + '.png'
         depth_path = base_path + '/depth/' + im_id_str + '.png'
         # visibmask_path = base_path+'/visib'+img_num_str+'.png'
         # invisibmask_path = base_path+'/invisib'+img_num_str+'.png'
-        scene_info = inout.load_info(
-            '/home/juil/Downloads/training_scene_generator_20170901/sixd_toolkit-master/output/render/coffee_{:03d}/info.yml'.format(
-                scene_id))
-        scene_gt = inout.load_gt(
-            '/home/juil/Downloads/training_scene_generator_20170901/sixd_toolkit-master/output/render/coffee_{:03d}/gt.yml'.format(
-                scene_id))
+        scene_info = inout.load_info(FLAGS.data_dir+'/coffee_{:03d}/info.yml'.format(scene_id))
+        scene_gt = inout.load_gt(FLAGS.data_dir+'/coffee_{:03d}/gt.yml'.format(scene_id))
         visible_obj = scene_info[im_id]['visible_obj']
         tf_example = dict_to_tf_example(depth_path, visible_obj, scene_gt[im_id], label_map_dict)
         writer.write(tf_example.SerializeToString())

@@ -1,0 +1,74 @@
+item {
+  id: 1
+  name: 'bear'
+}
+
+item {
+  id: 2
+  name: 'blue_thing'
+}
+
+item {
+  id: 3
+  name: 'bowl'
+}
+
+item {
+  id: 4
+  name: 'camera'
+}
+
+item {
+  id: 5
+  name: 'garden_sprayer'
+}
+
+item {
+  id: 6
+  name: 'cat'
+}
+
+item {
+  id: 7
+  name: 'cup'
+}
+
+item {
+  id: 8
+  name: 'drill'
+}
+
+item {
+  id: 9
+  name: 'duck'
+}
+
+item {
+  id: 10
+  name: 'egg_box'
+}
+
+item {
+  id: 11
+  name: 'white_bottle'
+}
+
+item {
+  id: 12
+  name: 'hole_puncher'
+}
+
+item {
+  id: 13
+  name: 'iron'
+}
+
+item {
+  id: 14
+  name: 'lamp'
+}
+
+item {
+  id: 15
+  name: 'phone'
+}
