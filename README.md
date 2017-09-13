@@ -1,5 +1,7 @@
 this repository was forked from https://github.com/tensorflow/models/tree/master/object_detection
 for the training and test codes, go to ./object_detection/Juils_codes
+for setting up go and read ./object_detection/README.md
+
 
 
 # TensorFlow Models
