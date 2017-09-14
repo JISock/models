@@ -88,7 +88,7 @@ def fn_AssignDetectionToGT(Detection,GT,score,threshold):
 
 
 # with open('../synthetic_data_training_depth_cups/testing/results_synthetic_dataset.pkl','r') as f:
-with open('../synthetic_data_training_depth_cups/testing/Detection_results_and_GT_real_data.pkl', 'r') as f:
+with open('../synthetic_data_training_depth_cups/testing/Detection_results_and_GT_real_data_46983.pkl', 'r') as f:
 # with open('../synthetic_data_training_depth_cups/testing/Detection_results_and_GT_real_data_tejani.pkl', 'r') as f:
     results = pickle.load(f)
 

@@ -24,7 +24,7 @@ from utils import visualization_utils as vis_util
 # # Model preparation
 
 # Path to frozen detection graph. This is the actual model that is used for the object detection.
-PATH_TO_CKPT = '../training/train/synthetic_inference_graph_2174.pb/frozen_inference_graph.pb'
+PATH_TO_CKPT = '../training/faster_rcnn_inception_resnet_v2_atrous_synthetic/frozen_inference_graph.pb'
 # PATH_TO_CKPT = '/home/juil/workspace/tensorflow_object_detection/object_detection/models/model/train/inference_graph.pb'
 
 # List of the strings that is used to add correct label for each box.
@@ -166,7 +166,7 @@ with detection_graph.as_default():
             Detection_results_and_GT.append({'Number_of_detection': num_detections, 'detected_boxes': Scaled_boxes,
                                              'detected_scores': Scaled_scores, 'GroundTruth': GroundTruth})
             idx += 1
-with open('Detection_results_and_GT_real_data.pkl', 'wb') as handle:
+with open('Detection_results_and_GT_real_data_46983.pkl', 'wb') as handle:
     pickle.dump(Detection_results_and_GT, handle)
 
 
