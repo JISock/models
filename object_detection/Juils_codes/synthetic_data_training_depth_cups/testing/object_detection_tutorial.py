@@ -87,6 +87,11 @@ with detection_graph.as_default():
             imsave('temp.png', output_im)
             image = Image.open('temp.png')
             image_np = load_image_into_numpy_array(image)
+            rgb_image_np = load_image_into_numpy_array(Image.open('/home/juil/workspace/6DOF-datasets/doumanoglou/test/01/rgb/{:04d}.png'
+.format(img_idx)))
+            rgb_image_np2 = load_image_into_numpy_array(
+                Image.open('/home/juil/workspace/6DOF-datasets/doumanoglou/test/01/rgb/{:04d}.png'
+                           .format(img_idx)))
             # Expand dimensions since the model expects images to have shape: [1, None, None, 3]
             image_np_expanded = np.expand_dims(image_np, axis=0)
             image_tensor = detection_graph.get_tensor_by_name('image_tensor:0')
@@ -165,7 +170,12 @@ with detection_graph.as_default():
 
             Detection_results_and_GT.append({'Number_of_detection': num_detections, 'detected_boxes': Scaled_boxes,
                                              'detected_scores': Scaled_scores, 'GroundTruth': GroundTruth})
+
+            plt.imsave(fname='/home/juil/Downloads/synthetic_data_analysis/analysis/detection_result/real/rgb_detection_real_{}.png'.format(idx),arr=rgb_image_np)
+            plt.imsave(fname='/home/juil/Downloads/synthetic_data_analysis/analysis/detection_result/synthetic/rgb_gt_real_{}.png'.format(idx), arr=rgb_image_np2)
             idx += 1
+
+
 with open('Detection_results_and_GT_real_data_46983.pkl', 'wb') as handle:
     pickle.dump(Detection_results_and_GT, handle)
 
