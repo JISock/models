@@ -23,7 +23,7 @@ import numpy as np
 def dict_to_tf_example(img_path,visible_obj,scene_gt,label_map_dict):
 
     ################################ juil_ have to change this part
-    img = scimisc.imread(img_path)
+    img = scimisc.imread(img_path)()
     height = img.shape[0]
     width = img.shape[1]
     output_im = np.zeros((height, width, 3))
