@@ -294,8 +294,11 @@ def load_image_into_numpy_array(image):
 #     pickle.dump(Detection_results_and_GT, handle)
 
 
+
+# # Detection
+
 # PATH_TO_TEST_IMAGES_DIR = '/home/juil/Downloads/training_scene_generator_20170901/sixd_toolkit-master/output/render'
-PATH_TO_TEST_IMAGES_DIR = '/home/juil/workspace/6DOF-datasets/Tejani/test/02'
+PATH_TO_TEST_IMAGES_DIR = '/home/juil/Downloads/synthetic_data_analysis/generation'
 # img_path = PATH_TO_TEST_IMAGES_DIR+'/coffee_{:03d}/depth/{:04d}.png'
 img_path = PATH_TO_TEST_IMAGES_DIR+'/depth/{:04d}.png'
 gt_path = PATH_TO_TEST_IMAGES_DIR+'/gt.yml'
@@ -306,7 +309,7 @@ with detection_graph.as_default():
     with tf.Session(graph=detection_graph) as sess:
         with open(gt_path, 'r') as f:
             gt = yaml.load(f, Loader=yaml.CLoader)
-        for img_idx in range(1, 1000):
+        for img_idx in range(1, 50):
             print(idx)
             # image = Image.open(img_path.format(img_idx))
             img = imread(img_path.format(img_idx))
@@ -318,8 +321,12 @@ with detection_graph.as_default():
             output_im[:, :, 2] = img
             imsave('temp.png', output_im)
             image = Image.open('temp.png')
-            rgb_image_np = load_image_into_numpy_array(Image.open(PATH_TO_TEST_IMAGES_DIR +'/rgb/{:04d}.png'.format(img_idx)))
             image_np = load_image_into_numpy_array(image)
+            rgb_image_np = load_image_into_numpy_array(Image.open('/home/juil/workspace/6DOF-datasets/doumanoglou/test/01/rgb/{:04d}.png'
+.format(img_idx)))
+            rgb_image_np2 = load_image_into_numpy_array(
+                Image.open('/home/juil/workspace/6DOF-datasets/doumanoglou/test/01/rgb/{:04d}.png'
+                           .format(img_idx)))
             # Expand dimensions since the model expects images to have shape: [1, None, None, 3]
             image_np_expanded = np.expand_dims(image_np, axis=0)
             image_tensor = detection_graph.get_tensor_by_name('image_tensor:0')
@@ -335,8 +342,7 @@ with detection_graph.as_default():
                 [boxes, scores, classes, num_detections],
                 feed_dict={image_tensor: image_np_expanded})
             vis_util.visualize_boxes_and_labels_on_image_array(
-                # image_np,
-                rgb_image_np,
+                image_np,
                 np.squeeze(boxes),
                 np.squeeze(classes).astype(np.int32),
                 np.squeeze(scores),
@@ -344,7 +350,7 @@ with detection_graph.as_default():
                 use_normalized_coordinates=True,
                 line_thickness=4,
                 max_boxes_to_draw=100,
-                min_score_thresh=.9
+                min_score_thresh=.1
             )
             im_width, im_height = image_np.shape[0:2]
             Scaled_boxes = np.zeros([int(num_detections[0]), 4])
@@ -394,21 +400,18 @@ with detection_graph.as_default():
                 use_normalized_coordinates=True,
                 line_thickness=4,
                 max_boxes_to_draw=100,
-                min_score_thresh=.5
+                min_score_thresh=.4
             )
 
             Detection_results_and_GT.append({'Number_of_detection': num_detections, 'detected_boxes': Scaled_boxes,
                                              'detected_scores': Scaled_scores, 'GroundTruth': GroundTruth})
+
+            # plt.imsave(fname='/home/juil/Downloads/synthetic_data_analysis/analysis/detection_result/real/rgb_detection_real_{}.png'.format(idx),arr=rgb_image_np)
+            # plt.imsave(fname='/home/juil/Downloads/synthetic_data_analysis/analysis/detection_result/synthetic/rgb_gt_real_{}.png'.format(idx), arr=rgb_image_np2)
             idx += 1
-            plt.imsave(
-                fname='/home/juil/Downloads/synthetic_data_analysis/analysis/detection_result/tejani_detection/detection_{}.png'.format(idx), arr=rgb_image_np)
-with open('Detection_results_and_GT_real_data_tejani.pkl', 'wb') as handle:
+
+
+with open('Detection_results_and_GT_real_generated_data_46983.pkl', 'wb') as handle:
     pickle.dump(Detection_results_and_GT, handle)
-
-
-1
-
-
-
 
 

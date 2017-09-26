@@ -89,11 +89,13 @@ def fn_AssignDetectionToGT(Detection,GT,score,threshold):
 
 # with open('../synthetic_data_training_depth_cups/testing/results_synthetic_dataset.pkl','r') as f:
 # with open('../synthetic_data_training_depth_cups/testing/Detection_results_and_GT_real_data_46983.pkl', 'r') as f:
-with open('../synthetic_data_training_depth_cups/testing/Detection_results_and_GT_real_data_tejani.pkl', 'r') as f:
+# with open('../synthetic_data_training_depth_cups/testing/Detection_results_and_GT_real_data_tejani.pkl', 'r') as f:
+with open('../synthetic_data_training_depth_cups/testing/Detection_results_and_GT_real_generated_data_46983.pkl', 'r') as f:
+# with open('/home/juil/workspace/GitHub/tf-faster-rcnn/lib/datasets/tools/Detection_results_and_GT_real_generated_data_65000.pkl', 'r') as f:
     results = pickle.load(f)
 
 # a = IoU(results[0]['detected_boxes'][0,:],results[0]['GroundTruth'][0,:])
-threshold = 0.5
+threshold = 0.8
 accumlabels = []
 accumscores = []
 numExpected =0
